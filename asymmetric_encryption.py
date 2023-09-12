@@ -3,20 +3,18 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
 
-
-# generate a private key 
-def key_gen():
+# generate a public/private key pair 
+def key_gen(backend=default_backend(), password=None):
     private_key = rsa.generate_private_key(
         public_exponent=65537, 
         key_size = 2048, 
-        backend = default_backend()
+        backend = backend
     )
-
     # extract the public key from the private key 
     public_key = private_key.public_key()
 
     # Convert the private key into bytes. We won't encrypt it this time
-    private_key_bytes  =public_key.public_bytes(
+    private_key_bytes = public_key.public_bytes(
         encoding=serialization.Encoding.PEM, 
         format=serialization.PrivateFormat.TraditionalOpenSSL, 
         encryption_algorithm=serialization.noEncryption
@@ -32,13 +30,13 @@ def key_gen():
     # Because there is no encyrption of the key, there is no password 
     private_key = serialization.load_pem_private_key(
         private_key_bytes, 
-        backend=default_backend(),
-        password=None
+        backend=backend,
+        password=password
     )
 
     public_key = serialization.load_pem_public_key(
         public_key_bytes,
-        backend=default_backend()
+        backend=backend
     )
     return private_key, public_key
 
@@ -80,7 +78,7 @@ def simple_rsa_crypto_main():
         print("\tpublic_key_file: {}".format(public_key_file))
         print("\t1. Encrypt Message.")
         print("\t2. Decrypt Message.")
-        print("\t3. Load public =key File.")
+        print("\t3. Load public key File.")
         print("\t4. Load private key File.")
         print("\t5. Create and load new public and private key files.")
         print("\t6. Quit.\n")
@@ -161,7 +159,6 @@ def simple_rsa_crypto_main():
 
                             public_key_file = None 
                             private_key_file = private_key_file_temp
-                pass
             case '6':
                 print("\n\nTerminating. This program will self destruct in 5 seconds. \n")
                 pass
@@ -169,6 +166,52 @@ def simple_rsa_crypto_main():
                 print("Unknown option {}".format(choice))
             
 ### DANGER ###
+
+##################
+#
+# To start asssume
+# - all lowercase words
+# - 4 characters or less 
+# - This program should take a public key and rsa encrypted ciphertext as inputs
+# - Use the RSA encryption to generate a few words of four or fewer letters and break the codes with a brute force program
+#
+##################
+def brute_force_rsa(public_key, ciphertext):
+
+def test_brute_force_rsa():
+    private_key_file_temp = input("\nEnter a file name for new private key: ")
+    public_key_file_temp = input("\nEnter a filename for a new public key: ")
+
+    if os.path.exists(private_key_file_temp) or os.path.exists(public_key_file_temp):
+        print("File already exists")
+    else: 
+        with open(private_key_file_temp, "wb+") as private_key_file_obj: 
+            with open(public_key_file_object, "wb+") as public_key_file_obj:
+                private_key = rsa.generate_private_key(
+                    public_exponent = 65537, 
+                    key_size = 2048, 
+                    backend = default_backend())
+                public_key = private_key.public_key()
+                
+                private_key_bytes = private_key.private_bytes(
+                    encoding=serialization.Encoding.PEM, 
+                    format=serialization.PrivateFormat.TraditionalOpenSSL, 
+                    encryption_algorithm=serialization.NoEncryption()
+                )
+                private_key_file_obj.write(private_key_bytes)
+
+                public_key_bytes = public_key.public_bytes(
+                    encoding=serialization.Encoding.PEM, 
+                    format=serialization.PublicFormat.SubjectPublicKeyInfo
+                )
+                public_key_file_obj.write(public_key_bytes)
+
+                public_key_file = None 
+                private_key_file = private_key_file_temp
+
+# Get Alice to send a few encrypted messages to Bob for decryption
+def simple_rsa_test_case():
+    pass
 
 def main():
     # Exercise 4.1 Use the simple rsa application to set up communication from Bob to Alice and then send a few encrypted messages from Alice to Bob for decryption

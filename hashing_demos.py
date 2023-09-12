@@ -41,3 +41,4 @@ print("\nAlice of hash through update {}".format(md5hasher.hexdigest()))
 #1. This hash produces a result stating the original input is "password"
 #2. This hash produces a result stating it is an empty hash (e.g. the hash produced by lines 3 + 4 in this file)
 #3. This hash produces a result stating the original input is "alice"
+
