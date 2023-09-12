@@ -176,38 +176,13 @@ def simple_rsa_crypto_main():
 # - Use the RSA encryption to generate a few words of four or fewer letters and break the codes with a brute force program
 #
 ##################
+
 def brute_force_rsa(public_key, ciphertext):
+    pass 
 
 def test_brute_force_rsa():
-    private_key_file_temp = input("\nEnter a file name for new private key: ")
-    public_key_file_temp = input("\nEnter a filename for a new public key: ")
-
-    if os.path.exists(private_key_file_temp) or os.path.exists(public_key_file_temp):
-        print("File already exists")
-    else: 
-        with open(private_key_file_temp, "wb+") as private_key_file_obj: 
-            with open(public_key_file_object, "wb+") as public_key_file_obj:
-                private_key = rsa.generate_private_key(
-                    public_exponent = 65537, 
-                    key_size = 2048, 
-                    backend = default_backend())
-                public_key = private_key.public_key()
-                
-                private_key_bytes = private_key.private_bytes(
-                    encoding=serialization.Encoding.PEM, 
-                    format=serialization.PrivateFormat.TraditionalOpenSSL, 
-                    encryption_algorithm=serialization.NoEncryption()
-                )
-                private_key_file_obj.write(private_key_bytes)
-
-                public_key_bytes = public_key.public_bytes(
-                    encoding=serialization.Encoding.PEM, 
-                    format=serialization.PublicFormat.SubjectPublicKeyInfo
-                )
-                public_key_file_obj.write(public_key_bytes)
-
-                public_key_file = None 
-                private_key_file = private_key_file_temp
+    # get public/private key pair 
+    private_key, public_key = key_gen()
 
 # Get Alice to send a few encrypted messages to Bob for decryption
 def simple_rsa_test_case():
