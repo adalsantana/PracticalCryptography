@@ -42,7 +42,7 @@ def scrypt_verify():
                  backend=default_backend())
     kdf.verify(b"my great password")
     print("Success! (Exception if mismatch)")
-    
+
 def generate(alphabet, max_len):
     if (max_len <= 0): return
     for c in alphabet: 
@@ -50,7 +50,15 @@ def generate(alphabet, max_len):
     for c in alphabet:
         for next in generate(alphabet, max_len-1):
             yield c + next 
-# this only checks a letter as a time as an exercise 
+
+# Write a program that feeds a counter into a sha-256, taking the output hash and ocnverting it to an 
+# integer. Repear until you find a hash that is less than the target number. The target number
+# should start out pretty big, e.g. 2^255. To make this more like blockchain include some arbitray bytes 
+# to be combined with the counter 
+def my_first_pow():
+
+    pass
+# this only checks a letter at a time as an exercise 
 def hash_searcher(target_hash):
     for letter in string.ascii_letters: 
         letter_hash = hashlib.md5(letter).hexdigest()
